@@ -1,47 +1,77 @@
-'use strict';
+"use strict"
+
+import bcrypt from "bcryptjs"
+
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define('User', {
+  const User = sequelize.define("User", {
     userName: {
       allowNull: false,
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        isUnique: { msg: "Username already exists" },
+        notEmpty: { msg: "user name is required" },
       },
     },
     firstName: {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        isNotNull: { msg: 'First Name is required' },
+        notEmpty: { msg: "first name is required" },
       },
     },
     lastName: {
       allowNull: false,
       type: DataTypes.STRING,
-      validate: {},
+      validate: {
+        notEmpty: { msg: "last name is required" },
+      },
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        isUnique: { msg: "Email already exists" },
-        isEmail: { msg: 'Invalid email address' },
+        isEmail: { msg: "Invalid email address" },
       },
     },
     password: {
-      allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        isNotNull: { msg: 'Password is required'}
+        fn: function(val) {
+          if (!this.id && (!this.password || !this.confirmation)) {
+            throw new Error("You need to submit a password and confirmation")
+          }
+          if (this.password != this.confirmation) {
+            throw new Error("Your password and confirmation do not match")
+          }
+        },
       },
+    },
+    confirmation: {
+      type: DataTypes.VIRTUAL,
+    },
+    checkbox: {
+      type: DataTypes.VIRTUAL,
     },
   }, {
     classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return User;
-};
+      associate: function(models) {},
+    },
+    hooks: {
+      beforeCreate: function(user) {
+        user.password = bcrypt.hashSync(user.password, 8)
+      },
+      beforeSave: function(user) {
+        if (user.password) {
+          user.password = bcrypt.hashSync(user.password, 8) 
+        }
+      },
+    },
+    instanceMethods: {
+      checkPassword: function(password) {
+        return bcrypt.compareSync(password, this.password, 8)
+      },
+    },
+  })
+
+  return User
+}

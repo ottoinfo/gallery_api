@@ -1,13 +1,14 @@
-'use strict';
+"use strict"
 
+// Password(bcrypt hash) => test
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Users', [{
+    return queryInterface.bulkInsert("Users", [{
       userName: "admin",
       firstName: "Test",
       lastName: "Admin",
       email: "test@admin.com",
-      password: "password",
+      password: "$2a$08$TUW4VqZUjIeKu8oxaZmrS.8ZYixCMC1LX.Sid1ccv9H4Cc.i4n7mW",
       createdAt: new Date(), 
       updatedAt: new Date(),
     }, {
@@ -15,7 +16,7 @@ module.exports = {
       firstName: "Daniel",
       lastName: "Leavit",
       email: "daniel@admin.com",
-      password: "password",
+      password: "$2a$08$TUW4VqZUjIeKu8oxaZmrS.8ZYixCMC1LX.Sid1ccv9H4Cc.i4n7mW",
       createdAt: new Date(), 
       updatedAt: new Date(),
     }, {
@@ -23,13 +24,12 @@ module.exports = {
       firstName: "Matthew",
       lastName: "Otto",
       email: "otto@admin.com",
-      password: "password",
+      password: "$2a$08$TUW4VqZUjIeKu8oxaZmrS.8ZYixCMC1LX.Sid1ccv9H4Cc.i4n7mW",
       createdAt: new Date(), 
       updatedAt: new Date(),
     }], {})
   },
-
   down: function (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Users', null, {})
-  }
+    return queryInterface.bulkDelete("Users", null, {})
+  },
 }

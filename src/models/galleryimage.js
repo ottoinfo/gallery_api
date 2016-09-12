@@ -1,32 +1,34 @@
-'use strict';
+"use strict"
+
 module.exports = function(sequelize, DataTypes) {
-  var GalleryImage = sequelize.define('GalleryImage', {
+  const GalleryImage = sequelize.define("GalleryImage", {
     galleryId: { 
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     imageId: { 
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     name: { 
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     description: { 
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     order: {
       type: DataTypes.INTEGER,
     },
     visible: {
-      type: DataTypes.BOOLEAN,
       defaultValue: true,
+      type: DataTypes.BOOLEAN,
     },
   }, {
     classMethods: {
       associate: function(models) {
-        GalleryImage.belongsTo(models.Image);
-        // GalleryImage.belongsTo(models.Gallery);
-      }
-    }
-  });
-  return GalleryImage;
-};
+        GalleryImage.belongsTo(models.Image)
+        // GalleryImage.belongsTo(models.Gallery)
+      },
+    },
+  })
+
+  return GalleryImage
+}

@@ -1,26 +1,27 @@
-'use strict';
+"use strict"
+
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('GalleryImages', {
+    return queryInterface.createTable("GalleryImages", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       galleryId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       imageId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       order: {
         type: Sequelize.INTEGER,
@@ -31,15 +32,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
+        type: Sequelize.DATE,
+      },
+    })
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('GalleryImages', { cascade: true });
-  }
-};
+    return queryInterface.dropTable("GalleryImages", { cascade: true })
+  },
+}

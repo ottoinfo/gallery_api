@@ -1,0 +1,29 @@
+{
+  "development": {
+    "database": "gallery",
+    "dialect": "postgres",
+    "host": "localhost",
+    "logging": true,
+    "password": null,
+    "port": 5432,
+    "username": null
+  },
+  "test": {
+    "database": "gallery",
+    "dialect": "postgres",
+    "host": "localhost",
+    "logging": true,
+    "password": null,
+    "port": 5432,
+    "username": null
+  },
+  "production": {
+    "database": "gallery",
+    "dialect": "postgres",
+    "host": "localhost",
+    "logging": false,
+    "password": null,
+    "port": 5432,
+    "username": null
+  }
+}

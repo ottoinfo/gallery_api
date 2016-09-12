@@ -1,61 +1,77 @@
-'use strict';
+"use strict"
+
+import helper from "../helpers/sequelize"
 
 module.exports = function(sequelize, DataTypes) {
-  var Gallery = sequelize.define('Gallery', {
+  const Gallery = sequelize.define("Gallery", {
+    slug: {
+      type: DataTypes.STRING,
+    },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [1,255],
+          msg: "Name can't be blank",
+        },
+      },
     },
     description: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     order: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     visible: {
       defaultValue: true,
-      type: DataTypes.BOOLEAN
-    }
+      type: DataTypes.BOOLEAN,
+    },
   }, {
     classMethods: {
       associate: function(models) {
         Gallery.belongsToMany(models.Image, { 
-          as: 'images',
-          foreignKey: 'galleryId',
-          through: models.GalleryImage
-        });
+          as: "images",
+          foreignKey: "galleryId",
+          through: models.GalleryImage,
+        })
       }, 
       getImages: function(id, db) {
-        console.log('ugghh')
+        console.log("ugghh")
         return Gallery.scope("visible").findById(id , {
           attributes: ["name", "description"],
           include: [{
             as: "images",
-            // attributes: [["name", "image_name"], ["file", "file_name"]],
+            attributes: {
+              exclude: ["id", "createdAt", "updatedAt"],
+            },
             model: db.Image,
           }],
-        }).then((rawData) => {
-          let data = rawData.toJSON();
-          data.images = data.images.map(function(rawImage) {
-            let image = {
-              name: rawImage.GalleryImage.name || rawImage.name,
-              description: rawImage.GalleryImage.description || rawImage.description,
-              file: rawImage.file,
-            };
-            return image;
-          });
-          return data;
-        });
-      }
+        })
+      },
+      getAllImages: function(id, db) {
+        return Gallery.scope("visible").findById(id).then(function(gallery) {
+          return gallery.getImages({
+            attributes: ["name"], 
+            joinTableAttributes: ["description"],
+          })
+        })
+      },
+    },
+    hooks: {
+      afterValidate: function(gallery) {
+        gallery.slug = helper.createSlug(gallery.name)
+      },
     },
     scopes: { 
       visible: { 
-        where: { visible: true }
+        where: { visible: true },
       },
       order: { 
-        order: '"order" ASC'
-      }
-    }
-  });
-  return Gallery;
-};
+        order: "\"order\" ASC",
+      },
+    },
+  })
+
+  return Gallery
+}

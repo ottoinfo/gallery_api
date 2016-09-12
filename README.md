@@ -16,6 +16,12 @@ Express
 
 Passport, Passport-Local, Cookie-Parser, Express-Sessions, Bcrypt
 
+Image Graphics
+--------------
+```
+brew install graphicsmagick
+```
+
 Setup
 -----
 Setup up Postgresql

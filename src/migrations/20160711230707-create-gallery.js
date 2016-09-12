@@ -1,12 +1,16 @@
-'use strict';
+"use strict"
+
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Galleries', {
+    return queryInterface.createTable("Galleries", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+      },
+      slug: {
+        type: Sequelize.STRING,
       },
       name: {
         allowNull: false,
@@ -30,9 +34,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    });
+    })
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Galleries', { cascade: true });
-  }
-};
+    return queryInterface.dropTable("Galleries", { cascade: true })
+  },
+}

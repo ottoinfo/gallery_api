@@ -1,0 +1,23 @@
+{
+  "large": {
+    "folder": "large",
+    "height": 800,
+    "orientation": true,
+    "path": "uploads/images/",
+    "width": 800
+  },
+  "medium": {
+    "folder": "medium",
+    "height": 300,
+    "orientation": true,
+    "path": "uploads/images/",
+    "width": 300
+  },
+  "small": {
+    "folder": "small",
+    "height": 150,
+    "orientation": true,
+    "path": "uploads/images/",
+    "width": 150
+  }
+}
